@@ -1,4 +1,5 @@
 import EventCalendar from "@/components/EventCalendar";
+import FormModal from "@/components/FormModal";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -16,7 +17,17 @@ const SinglePersonaPage = () => {
                 <Image src="https://images.pexels.com/photos/834863/pexels-photo-834863.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" width={144} height={144} className="w-36 h-36 rounded-full object-cover"/>
             </div>
             <div className="w-2/3 flex flex-col justify-between gap-4">
+            <div className="flex items-center gap-4">
                 <h1 className="text-xl font-semibold">John Saef Smith</h1>
+                <FormModal table="student" type="update" data={{
+                  id: 1,
+                  username :"deanguerrero",
+                  email: "deanguerrero@gmail.com",
+                  password: "password",
+                }
+                
+              }/>
+              </div>
                 <p className="text-sm text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                 <div className="flex items-center justify-between gap-2 flex-wrap text-xs font-medium">
                     <div className="w-full md:w-1/3 lg:w-full 2xl:w-1/3 flex items-center gap-2">

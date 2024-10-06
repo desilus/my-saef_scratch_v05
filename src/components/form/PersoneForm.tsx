@@ -27,7 +27,7 @@ const schema = z.object({
 
 type Inputs = z.infer<typeof schema>;
 
-const SediForm = ({
+const PersoneForm = ({
   type,
   data,
 }: {
@@ -47,9 +47,8 @@ const SediForm = ({
   });
   const metodo = type === "create" ? "Crea" : "Aggiorna";
   return (
-  
     <form className="flex flex-col gap-8" onSubmit={onSubmit}>
-      <h1 className="text-xl font-semibold">{metodo} una sede</h1>
+      <h1 className="text-xl font-semibold">{metodo} una persona</h1>
       <span className="text-xs text-gray-400 font-medium">
         Authentication information
       </span>
@@ -161,4 +160,4 @@ const SediForm = ({
   );
 };
 
-export default SediForm;
+export default PersoneForm;

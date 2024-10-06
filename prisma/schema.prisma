@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model personale {
+  id                     String  @id @default(auto()) @map("_id") @db.ObjectId
+  APPELLATIVO            String
+  CODICE_FISCALE         String
+  COGNOME                String
+  DATA_ASSUNZIONE        String
+  DATA_DI_NASCITA        String
+  DATA_LICENZIAMENTO     String?
+  EMAIL                  String?
+  IDFORMAZIONE_SPECIFICA String?
+  IDNOMINASICUREZZA      String?
+  IDPERSONALE            Int 
+  IDSEDE                 Int 
+  IDSOCIETA              Int 
+  NOME                   String
+  SQUADRA                String?
+
+  // Relazione con il modello 'utenti'
+  utenti                 utenti? @relation(fields: [IDSOCIETA], references: [IDSOCIETA])
+}
+
+model sedi {
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
+  CAP             Int
+  COMUNE          String
+  IDSEDE          Int 
+  IDSOCIETA       Int
+  IDTIPOSEDE      String
+  INDIRIZZO       String
+  NAZIONE         String
+  PROVINCIA       String
+  RAGIONE_SOCIALE String
+  TELEFONO        Int?
+  TIPOSEDE        String
+
+  // Relazione con il modello 'utenti'
+  utenti          utenti? @relation(fields: [IDSOCIETA], references: [IDSOCIETA])
+}
+
+model utenti {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  IDPERSONALE Int
+  IDSEDE      Int
+  IDSOCIETA   Int @unique
+  PASSWORD    String
+  UNIQUEID    Int
+  USERNAME    String
+
+  // Un utente può avere una relazione con molteplici 'personale' (uno-a-molti)
+  personale   personale[]
+
+  // Un utente può avere una relazione con molteplici 'sedi' (uno-a-molti)
+  sedi        sedi[]
+}
+

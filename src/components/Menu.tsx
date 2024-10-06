@@ -9,7 +9,7 @@ const menuItems = [
       {
         icon: "/home.png",
         label: "Home",
-        href: "/",
+        href: "/admin",
         visible: ["admin", "teacher", "student", "parent"],
       },
       {
@@ -33,15 +33,15 @@ const menuItems = [
       {
         icon: "/subject.png",
         label: "Nomine",
-        href: "/list/nomine",
+        href: "/nomina",
         visible: ["admin"],
       },
-      // {
-      //   icon: "/class.png",
-      //   label: "Classes",
-      //   href: "/list/classes",
-      //   visible: ["admin", "teacher"],
-      // },
+      {
+        icon: "/class.png",
+        label: "Documenti",
+        href: "/documento",
+        visible: ["admin", "teacher"],
+      },
       // {
       //   icon: "/lesson.png",
       //   label: "Lessons",

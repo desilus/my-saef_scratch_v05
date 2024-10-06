@@ -1,7 +1,26 @@
 "use client";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import React, { useState } from "react";
-import SediForm from "./form/SediForm";
+// CARICA TUTTO SEMPRE
+// import SediForm from "./form/SediForm";
+// import PersoneForm from "./form/PersoneForm";
+
+// LAZY LOADING AL POSTO DI CARICARE TUTTO SUBITO
+const SediForm = dynamic(()=>import("./form/SediForm"), {
+  loading:()=><h1>Loading...</h1>
+})
+const PersoneForm = dynamic(()=>import("./form/PersoneForm"), {
+  loading:()=><h1>Loading...</h1>
+})
+
+
+const forms: {
+  [key: string]: (type: "create" | "update", data?: any) => JSX.Element;
+} = {
+  teacher: (type, data) => <SediForm type={type} data={data} />,
+  student: (type, data) => <PersoneForm type={type} data={data} />,
+};
 
 const FormModal = ({
   table,
@@ -27,13 +46,20 @@ const FormModal = ({
   const Form = () => {
     return type === "delete" && id ? (
       <form action="" className="p-4 flex flex-col gap-4">
-        <span className="text-center font-medium">I dati saranno cancellati. Sei sicuro di voler eliminare questo {table}?</span>
-        <button className="bg-red-700 text-white py-2 px-4 rounded-md border-none w-max self-center">Elimina</button>
+        <span className="text-center font-medium">
+          I dati saranno cancellati. Sei sicuro di voler eliminare questo{" "}
+          {table}?
+        </span>
+        <button className="bg-red-700 text-white py-2 px-4 rounded-md border-none w-max self-center">
+          Elimina
+        </button>
       </form>
+    ) : type === "create" || type === "update" ? (
+      //   "create or update form"
+      // AGGIUNTO TEST PER SEDIFORM
+      forms[table](type, data)
     ) : (
-    //   "create or update form"
-    // AGGIUNTO TEST PER SEDIFORM
-    <SediForm type="create"/>
+      "Form non trovato!"
     );
   };
   return (
@@ -46,8 +72,9 @@ const FormModal = ({
       </button>
       {open && (
         <div className="w-screen h-screen absolute left-0 top-0 bg-black bg-opacity-60 z-50 flex items-center justify-center">
+          {/* CONTROLLARE PROBLEMA ALTEZZA MOBILE NN SI VEDE IL TASTO */}
           <div className="bg-white p-4 rounded-md relative w-[90%] md:w-[70%] lg:w-[60%] xl:w-[50%] 2xl:w-[40%]">
-            <Form/>
+            <Form />
             <div
               className="absolute top-4 right-4 cursor-pointer"
               onClick={() => setOpen(false)}
